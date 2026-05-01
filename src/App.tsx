@@ -32,7 +32,9 @@ export default function App() {
     toggleTheme,
     togglePrivacy,
     processRecurringPayment,
-    isLoaded
+    isLoaded,
+    installApp,
+    isInstallable
   } = useFinance();
 
   if (!isLoaded) {
@@ -87,7 +89,13 @@ export default function App() {
           privacyMode={state.privacyMode}
         />
       )}
-      {activeTab === 'settings' && <SettingsView state={state} />}
+      {activeTab === 'settings' && (
+        <SettingsView 
+          state={state} 
+          installApp={installApp} 
+          isInstallable={isInstallable} 
+        />
+      )}
 
       <TransactionModal 
         isOpen={isTxModalOpen} 

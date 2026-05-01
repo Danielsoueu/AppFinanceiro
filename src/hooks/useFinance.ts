@@ -15,9 +15,17 @@ export function useFinance() {
 
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
 
   // Initialize DB and load state
   useEffect(() => {
+    const handleBeforeInstallPrompt = (e: Event) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+    };
+
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    
     async function initDB() {
       const db = await openDB(DB_NAME, 1, {
         upgrade(db) {
@@ -184,6 +192,16 @@ export function useFinance() {
     });
   }, [hapticFeedback]);
 
+  const installApp = useCallback(async () => {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    if (outcome === 'accepted') {
+      setDeferredPrompt(null);
+      addNotification('App instalado com sucesso!', 'success');
+    }
+  }, [deferredPrompt, addNotification]);
+
   return {
     state,
     notifications,
@@ -195,5 +213,7 @@ export function useFinance() {
     togglePrivacy,
     processRecurringPayment,
     isLoaded,
+    installApp,
+    isInstallable: !!deferredPrompt
   };
 }

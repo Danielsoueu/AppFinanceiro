@@ -13,6 +13,9 @@ export default defineConfig(({mode}) => {
       VitePWA({
         registerType: 'autoUpdate',
         includeAssets: ['icon.svg'],
+        devOptions: {
+          enabled: true
+        },
         manifest: {
           name: 'SoloFinance Pro',
           short_name: 'SoloFinance',
@@ -20,16 +23,20 @@ export default defineConfig(({mode}) => {
           theme_color: '#4f46e5',
           background_color: '#f8fafc',
           display: 'standalone',
+          start_url: '/',
+          scope: '/',
           icons: [
             {
               src: 'icon.svg',
               sizes: '192x192',
-              type: 'image/svg+xml'
+              type: 'image/svg+xml',
+              purpose: 'any maskable'
             },
             {
               src: 'icon.svg',
               sizes: '512x512',
-              type: 'image/svg+xml'
+              type: 'image/svg+xml',
+              purpose: 'any maskable'
             }
           ]
         }
