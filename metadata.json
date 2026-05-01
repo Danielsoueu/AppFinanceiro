@@ -1,0 +1,6 @@
+{
+  "name": "SoloFinance Pro",
+  "description": "Gestão financeira intuitiva com foco em privacidade, contratos recorrentes e análise de fluxo de caixa.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["Finance Management", "Data Visualization", "Offline First"]
+}
